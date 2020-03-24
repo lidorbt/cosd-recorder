@@ -86,10 +86,10 @@ export default function COSDRecord() {
   return (
     <>
       <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
+      <AppBar position="absolute" color="primary" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            COVID-19 Symptoms Detection
+            {'COVID-19 Symptoms Detection'}
           </Typography>
         </Toolbar>
       </AppBar>

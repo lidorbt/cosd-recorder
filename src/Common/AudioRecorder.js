@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { ReactMic } from '@cleandersonlobo/react-mic'
+import Swal from 'sweetalert2'
 import '../Assets/font-awesome/css/all.min.css'
 import '../Assets/recorder-style.css'
 
 const AudioRecorder = () => {
+  const RECORD_TIME_LIMIT = 10000
 
   const [isRecording, setIsRecording] = useState()
   const [downloadLinkURL, setDownloadLinkURL] = useState()
@@ -11,6 +13,7 @@ const AudioRecorder = () => {
   const [recordingInSession, setRecordingInSession] = useState(false)
   const [recordingStarted, setRecordingStarted] = useState(false)
   const [recordingStopped, setRecordingStopped] = useState(false)
+  const [recordTimeout, setRecordTimeout] = useState(null)
 
   const onSave = blobObject => {
     setDownloadLinkURL(blobObject.blobURL)
@@ -25,7 +28,7 @@ const AudioRecorder = () => {
   }
 
   const onData = recordedBlob => {
-    // console.log('ONDATA CALL IS BEING CALLED! ', recordedBlob);
+    console.log('ONDATA CALL IS BEING CALLED! ', recordedBlob)
   }
 
   const onBlock = () => {
@@ -33,6 +36,16 @@ const AudioRecorder = () => {
   }
 
   const startRecording = () => {
+    const timeoutId = setTimeout(() => {
+      stopRecording()
+      Swal.fire(
+        'Record Limit',
+        'Record limit is 10 secods',
+        'info'
+      )
+    }, RECORD_TIME_LIMIT)
+
+    setRecordTimeout(timeoutId)
     setIsRecording(true)
     setRecordingInSession(true)
     setRecordingStarted(true)
@@ -40,6 +53,10 @@ const AudioRecorder = () => {
   }
 
   const stopRecording = () => {
+    if (recordTimeout) {
+      clearTimeout(recordTimeout)
+      setRecordTimeout(null)
+    }
     setIsRecording(false)
     setRecordingInSession(false)
     setRecordingStarted(false)
@@ -52,18 +69,18 @@ const AudioRecorder = () => {
 
   return (
     <div>
-      <div id="project-wrapper">
-        <div id="project-container">
-          <div id="overlay" />
-          <div id="content">
+      <div id='project-wrapper'>
+        <div id='project-container'>
+          <div id='overlay' />
+          <div id='content'>
             <h2>Recorder</h2>
             <h3>Some Instructions</h3>
             <ReactMic
-              className="oscilloscope"
+              className='oscilloscope'
               record={isRecording}
-              backgroundColor="#333"
-              strokeColor="#ffffff"
-              visualSetting="sinewave"
+              backgroundColor='#333'
+              strokeColor='#ffffff'
+              visualSetting='sinewave'
               audioBitsPerSecond={128000}
               onStop={onStop}
               onStart={onStart}
@@ -71,31 +88,31 @@ const AudioRecorder = () => {
               onData={onData}
               onBlock={onBlock}
             />
-            <div id="oscilloscope-scrim">
-              {!recordingInSession && <div id="scrim" />}
+            <div id='oscilloscope-scrim'>
+              {!recordingInSession && <div id='scrim' />}
             </div>
-            <div id="controls">
-              <div className="column active">
+            <div id='controls'>
+              <div className='column active'>
                 <i
                   onClick={startRecording}
                   className={recordBtn}
-                  aria-hidden="true"
+                  aria-hidden='true'
                 />
               </div>
-              <div className="column">
+              <div className='column'>
                 <i
                   onClick={stopRecording}
                   className={stopBtn}
-                  aria-hidden="true"
+                  aria-hidden='true'
                 />
               </div>
-              <div className="column download">
-                <a className={downloadLink} href={downloadLinkURL} download={'recording.webm'} > </a>
+              <div className='column download'>
+                <a className={downloadLink} href={downloadLinkURL} download={'recording.wav'} > </a>
               </div>
             </div>
           </div>
-          <div id="audio-playback-controls">
-            <audio controls="controls" src={blobURL} controlsList="nodownload" />
+          <div id='audio-playback-controls'>
+            <audio controls='controls' src={blobURL} controlsList='nodownload' />
           </div>
         </div>
       </div>

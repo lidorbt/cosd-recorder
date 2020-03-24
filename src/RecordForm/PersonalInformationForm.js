@@ -118,7 +118,7 @@ export default function PersonalInformationForm() {
                     control={<Checkbox checked={otherDisease.trim() !== ''} onChange={handleChange} name='Other' />} />
                 </Grid>
                 <Grid item>
-                  <TextField id="standard-name" label="Name" value={otherDisease} onChange={handleOtherDiseaseChange} />
+                  <TextField disabled={hasLungsDisease !== 'yes'} id="standard-name" label="Name" value={otherDisease} onChange={handleOtherDiseaseChange} />
                 </Grid>
               </Grid>
             </FormGroup>
