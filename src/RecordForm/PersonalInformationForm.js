@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
+/* eslint-disable react/prop-types */
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import Typography from '@material-ui/core/Typography'
 import { DatePicker } from '@material-ui/pickers'
 import { FormControlLabel, RadioGroup, FormLabel, FormControl, Radio, Select, InputLabel, MenuItem, makeStyles, FormGroup, Checkbox, TextField } from '@material-ui/core'
 import _ from 'lodash'
 
-export default function PersonalInformationForm() {
-  const HealthStatusTypes = ['Healthy', 'Quarantine', 'Corona Positive']
-  const [selectedYear, handleYearChange] = useState(new Date())
-  const [hasLungsDisease, setHasLungsDisease] = useState('no')
-  const [isSmoking, setIsSmoking] = useState('no')
-  const [gender, setGender] = useState('female')
-  const [healthStatus, setHealthStatus] = useState('0')
-  const [otherDisease, setOtherDisease] = useState('')
+export const HealthStatusTypes = ['Healthy', 'Quarantine', 'Corona Positive']
 
+export default function PersonalInformationForm({ selectedYear, handleYearChange,
+  hasLungsDisease, setHasLungsDisease,
+  isSmoking, setIsSmoking,
+  gender, setGender,
+  healthStatus, setHealthStatus,
+  otherDisease, setOtherDisease }) {
 
   const handleHasLungsDiseaseChange = event => {
     setHasLungsDisease(event.target.value)
@@ -82,7 +82,7 @@ export default function PersonalInformationForm() {
               value={healthStatus}
               onChange={handleHealthStatusChange}
               label="Health Status">
-              {HealthStatusTypes.map((statusType, index) => (<MenuItem key={String(index)} value={String(index)}>{statusType}</MenuItem>))}
+              {HealthStatusTypes.map((statusType, index) => (<MenuItem key={String(index)} value={statusType}>{statusType}</MenuItem>))}
             </Select>
           </FormControl>
         </Grid>

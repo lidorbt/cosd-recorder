@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { ReactMic } from '@cleandersonlobo/react-mic'
 import Swal from 'sweetalert2'
 import '../Assets/font-awesome/css/all.min.css'
 import '../Assets/recorder-style.css'
 
-const AudioRecorder = () => {
+const AudioRecorder = ({ setBlobObject }) => {
   const RECORD_TIME_LIMIT = 10000
 
   const [isRecording, setIsRecording] = useState()
@@ -24,6 +25,7 @@ const AudioRecorder = () => {
   }
 
   const onStop = blobObject => {
+    setBlobObject(blobObject.blob)
     setBlobURL(blobObject.blobURL)
   }
 

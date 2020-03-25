@@ -1,27 +1,26 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
+import { Checkbox, FormControlLabel, FormGroup } from '@material-ui/core'
 
-const useStyles = makeStyles((theme) => ({
-  listItem: {
-    padding: theme.spacing(1, 0),
-  },
-}))
+export default function AgreementForm({ acceptSend, setAcceptSend }) {
 
-export default function AgreementForm() {
-  const classes = useStyles()
+  const handleAcceptSend = event => {
+    setAcceptSend(event.target.checked)
+  }
 
   return (
     <>
-      <Typography variant="h6" gutterBottom>
-        Some Agreement Shit
-			</Typography>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Some Agreement Shit
-					</Typography>
+        <Grid item xs={12}>
+          {'Add Disclamer / Thanks'}
+        </Grid>
+        <Grid item xs={12}>
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox checked={acceptSend} onChange={handleAcceptSend} />}
+              label={'I agree'} />
+          </FormGroup>
         </Grid>
       </Grid>
     </>
